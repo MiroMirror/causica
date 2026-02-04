@@ -20,11 +20,24 @@ This codebase has been heavily refactored, you can find the previous version of 
 
 ## Installation
 
+### From PyPI
+
 The Causica repo is on PyPI so you can be pip installed:
 
 ```
 pip install causica
 ```
+
+### From GitHub Fork (Google Colab 等环境)
+
+若你 fork 了本仓库并希望在自己的环境（如 Google Colab）中使用，可执行：
+
+```bash
+# 将 YOUR_GITHUB_USERNAME 替换为你的 GitHub 用户名
+pip install git+https://github.com/YOUR_GITHUB_USERNAME/causica.git
+```
+
+本版本支持 **Python 3.10–3.12**。Colab 使用说明见 [COLAB.md](COLAB.md)。
 
 ## About
 

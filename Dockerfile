@@ -13,7 +13,8 @@ RUN apt-get update && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/* && \
     ln -s /usr/bin/python3 /usr/bin/python && \
-    python -c 'import sys; assert sys.version_info[:2] == (3, 10)'
+    # 注意：若需 Python 3.12，请更换为支持 3.12 的 base 镜像
+python -c 'import sys; assert sys.version_info[:2] == (3, 10)'
 
 ENV POETRY_CACHE_DIR="/root/.cache/pypoetry" \
     POETRY_NO_INTERACTION=1 \
