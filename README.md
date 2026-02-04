@@ -37,7 +37,7 @@ pip install causica
 pip install git+https://github.com/YOUR_GITHUB_USERNAME/causica.git
 ```
 
-本版本支持 **Python 3.10–3.12**。Colab 使用说明见 [COLAB.md](COLAB.md)。
+本版本支持 **Python 3.10 及以上版本**（包括 3.10, 3.11, 3.12, 3.13 及未来版本）。Colab 使用说明见 [COLAB.md](COLAB.md)。
 
 ## About
 

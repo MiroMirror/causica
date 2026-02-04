@@ -32,7 +32,7 @@ cd causica
 git remote add myfork https://github.com/YOUR_USERNAME/causica.git
 # ... 进行修改 ...
 git add .
-git commit -m "Support Python 3.10-3.12"
+git commit -m "Support Python 3.10+ (including 3.13+)"
 git push myfork main
 ```
 
@@ -104,7 +104,7 @@ https://colab.research.google.com/github/YOUR_USERNAME/causica/blob/main/example
 
 ### Q: Colab 提示 Python 版本不兼容？
 
-本版本支持 Python 3.10–3.12。Colab 当前多为 3.10，应可正常使用。可在 Colab 中执行 `!python --version` 查看版本。
+本版本支持 **Python 3.10 及以上版本**（包括 3.10, 3.11, 3.12, 3.13 及未来版本）。Colab 当前多为 3.10，应可正常使用。可在 Colab 中执行 `!python --version` 查看版本。
 
 ### Q: 安装时 torch 版本冲突？
 
