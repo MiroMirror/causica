@@ -7,6 +7,7 @@ from causica.functional_relationships.functional_relationships import Functional
 from causica.functional_relationships.heteroscedastic_rff_functional_relationships import (
     HeteroscedasticRFFFunctionalRelationships,
 )
+from causica.functional_relationships.icgnn import ICGNN
 from causica.functional_relationships.linear_functional_relationships import LinearFunctionalRelationships
 from causica.functional_relationships.rff_functional_relationships import RFFFunctionalRelationships
 from causica.functional_relationships.temporal_functional_relationships import TemporalEmbedFunctionalRelationships
