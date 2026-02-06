@@ -42,7 +42,7 @@ class Noise(Generic[SampleType], abc.ABC, td.Distribution):
 BaseNoiseType_co = TypeVar("BaseNoiseType_co", bound=Noise, covariant=True)
 
 
-class IndependentNoise(Generic[BaseNoiseType_co], td.Independent, Noise[torch.Tensor]):
+class IndependentNoise(td.Independent, Noise[torch.Tensor]):
     """Like `td.Idenpendent` but also forwards `Noise` specific methods."""
 
     base_dist: BaseNoiseType_co
