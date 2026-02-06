@@ -42,10 +42,22 @@ class Noise(Generic[SampleType], abc.ABC, td.Distribution):
 BaseNoiseType_co = TypeVar("BaseNoiseType_co", bound=Noise, covariant=True)
 
 
-class IndependentNoise(Generic[BaseNoiseType_co], td.Independent):
-    """Like `td.Idenpendent` but also forwards `Noise` specific methods."""
+class IndependentNoise(td.Independent):
+    """Like `td.Idenpendent` but also forwards `Noise` specific methods.
+    
+    This class supports generic type syntax (e.g., IndependentNoise[BernoulliNoise])
+    for type checking, but does not inherit from Generic to avoid MRO conflicts
+    in Python 3.12.
+    """
 
     base_dist: BaseNoiseType_co
+
+    # 支持泛型语法但不继承 Generic，避免 Python 3.12 MRO 冲突
+    # 这允许类型检查器识别 IndependentNoise[T]，但运行时返回类本身
+    def __class_getitem__(cls, item):
+        # 返回类本身，保持运行时行为不变
+        # 类型检查器会识别这个模式
+        return cls
 
     def __init__(
         self,
