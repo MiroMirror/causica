@@ -4,16 +4,12 @@ import torch
 from tensordict import TensorDict
 from torch import nn
 
-from causica.functional_relationships.functional_relationships import (
-    FunctionalRelationships,
-    sample_dict_to_tensor,
-    tensor_to_sample_dict,
-)
+from causica.functional_relationships.functional_relationships import FunctionalRelationships
 
 
 class ICGNN(FunctionalRelationships):
     """
-    This is a `FunctionalRelationsips` that implements the ICGNN.
+    This is a `FunctionalRelationships` that implements the ICGNN.
 
     Details can be found here: https://openreview.net/forum?id=S2pNPZM-w-f
 
@@ -22,24 +18,27 @@ class ICGNN(FunctionalRelationships):
 
     def __init__(
         self,
-        variables: Dict[str, torch.Size],
+        shapes: dict[str, torch.Size],
         embedding_size: Optional[int] = None,
         out_dim_g: Optional[int] = None,
         norm_layer: Optional[Type[nn.LayerNorm]] = None,
         res_connection: bool = False,
     ) -> None:
-        super().__init__(variables)
+        super().__init__(shapes=shapes)
 
-        # this needs to be a parameter so it is registered to the module
-        self.stacked_variable_masks = torch.nn.Parameter(
-            torch.stack(list(self.variable_masks.values())).float(), requires_grad=False
+        # 使用新版本的 API：stacked_key_masks 而不是 stacked_variable_masks
+        self.nn = FGNNI(
+            self.stacked_key_masks, 
+            embedding_size, 
+            out_dim_g, 
+            norm_layer, 
+            res_connection
         )
 
-        self.nn = FGNNI(self.stacked_variable_masks, embedding_size, out_dim_g, norm_layer, res_connection)
-
     def forward(self, samples: TensorDict, graphs: torch.Tensor) -> TensorDict:
-        return tensor_to_sample_dict(
-            self.nn(sample_dict_to_tensor(samples, self.variable_masks), graphs), self.variable_masks
+        # 使用新版本的 API：tensor_to_td.inv() 和 tensor_to_td()
+        return self.tensor_to_td(
+            self.nn(self.tensor_to_td.inv(samples), graphs)
         )
 
 
