@@ -5,7 +5,10 @@ from torch.distributions.constraints import Constraint
 from causica.distributions.adjacency import AdjacencyDistribution
 from causica.distributions.distribution_module import DistributionModule
 from causica.distributions.noise.joint import JointNoiseModule
-from causica.functional_relationships import FunctionalRelationships, TemporalEmbedFunctionalRelationships
+
+# 从子模块直接导入，避免与 causica.distributions 的循环导入（distributions/__init__ 会导入本模块）
+from causica.functional_relationships.functional_relationships import FunctionalRelationships
+from causica.functional_relationships.temporal_functional_relationships import TemporalEmbedFunctionalRelationships
 from causica.sem.distribution_parameters_sem import DistributionParametersSEM
 from causica.sem.temporal_distribution_parameters_sem import TemporalDistributionParametersSEM
 
