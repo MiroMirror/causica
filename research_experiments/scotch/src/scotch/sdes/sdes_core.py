@@ -1,4 +1,5 @@
 """This implements the abstract template for stochastic differential equations"""
+
 from abc import ABC, abstractmethod
 
 import torch

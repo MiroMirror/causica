@@ -73,7 +73,6 @@ class UnivariateNormalNoiseModule(NoiseModule[IndependentNoise[UnivariateNormalN
     def forward(
         self, x: Optional[tuple[torch.Tensor, torch.Tensor] | torch.Tensor] = None
     ) -> IndependentNoise[UnivariateNormalNoise]:
-
         """
         Generarate Independent noise module for the Gaussian distribution.
 

@@ -43,7 +43,6 @@ class CausalDecoderLayer(nn.Module):
     def forward(
         self, queries: torch.Tensor, keys: torch.Tensor, values: torch.Tensor, mask: Optional[torch.Tensor]
     ) -> torch.Tensor:
-
         """
         Args:
             queries: expected shape: (batch_size, max_seq_length, d_model)
@@ -103,7 +102,6 @@ class AmortizedDecoderLayer(nn.Module):
     def forward(
         self, queries: torch.Tensor, keys: torch.Tensor, values: torch.Tensor, mask: Optional[torch.Tensor]
     ) -> torch.Tensor:
-
         """
         Args:
             queries: expected shape: (batch_size, max_seq_length, d_model)

@@ -1,0 +1,39 @@
+on:
+  release:
+    types: [released]
+jobs:
+  pypi-publish:
+    name: Upload release to PyPI
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/causica
+    permissions:
+      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.13"
+
+    - name: Install poetry
+      run: |
+        pip install poetry==1.8.3
+
+    - name: Install dependencies and build
+      run: |
+        poetry env use 3.13
+        poetry install --no-interaction --no-dev
+        poetry build
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: Build artifacts
+        path: ./dist
+        retention-days: 90
+
+    - name: Publish package distributions to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1

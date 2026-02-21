@@ -1,4 +1,5 @@
 """Lightning Classes for loading data in the default format used in Azure Blob Storage."""
+
 import functools
 import os
 from collections import defaultdict

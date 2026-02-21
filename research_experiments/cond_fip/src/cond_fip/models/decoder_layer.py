@@ -37,7 +37,6 @@ class AmortizedDecoderLayer(nn.Module):
     def forward(
         self, queries: torch.Tensor, keys: torch.Tensor, values: torch.Tensor, mask: Optional[torch.Tensor] = None
     ) -> torch.Tensor:
-
         """
         Args:
             queries: expected shape: (batch_size, max_seq_length, d_model)
@@ -104,7 +103,6 @@ class AdaptiveAmortizedDecoderLayer(nn.Module):
         condition: torch.Tensor,
         mask: Optional[torch.Tensor] = None,
     ) -> torch.Tensor:
-
         """
         Args:
             queries: expected shape: (batch_size, max_seq_length, d_model)

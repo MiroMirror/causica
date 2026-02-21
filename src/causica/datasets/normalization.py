@@ -1,4 +1,5 @@
 """Module that provides data normalization functionality."""
+
 from typing import Any, Callable, Optional
 
 import torch
@@ -27,7 +28,6 @@ class LoadNoneTensorMixin(nn.Module):
 
 
 class LogTransform(TransformModule[torch.Tensor, torch.Tensor], td.Transform, LoadNoneTensorMixin):
-
     """
     A transform to apply the log function to a single tensor plus an offset.
     """

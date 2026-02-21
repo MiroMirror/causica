@@ -16,7 +16,7 @@ def _load_and_test_dataset(root_path: str):
     assert tensordict_shapes(train_data) == tensordict_shapes(test_data)
     groups = set(train_data.keys())
     interventions = load_data(root_path, DataEnum.INTERVENTIONS, variables_metadata)
-    for (intervention_a, intervention_b, _) in interventions:
+    for intervention_a, intervention_b, _ in interventions:
         int_groups_a = set(intervention_a.intervention_values.keys()) | intervention_a.sampled_nodes
         int_groups_b = set(intervention_b.intervention_values.keys()) | intervention_b.sampled_nodes
         assert groups == int_groups_a
@@ -36,7 +36,7 @@ def load_and_test_counterfactuals(root_path):
     variables_metadata = load_data(root_path, DataEnum.VARIABLES_JSON)
     # not all counterfactuals exist
     counterfactuals = load_data(root_path, DataEnum.COUNTERFACTUALS, variables_metadata)
-    for (intervention_a, intervention_b, _) in counterfactuals:
+    for intervention_a, intervention_b, _ in counterfactuals:
         int_groups_a = set(intervention_a.intervention_values.keys()) | intervention_a.sampled_nodes
         int_groups_b = set(intervention_b.intervention_values.keys()) | intervention_b.sampled_nodes
         assert int_groups_a == int_groups_b

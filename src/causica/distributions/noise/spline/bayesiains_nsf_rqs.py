@@ -11,6 +11,7 @@ This is a copy-paste with tiny modifications to fit it all in one file
 
 It has an MIT license
 """
+
 import numpy as np
 import torch
 from torch.nn import functional as F

@@ -1,4 +1,5 @@
 """Module with generic Adjacency Distribution tests."""
+
 from typing import Optional, Type, Union
 
 import numpy as np

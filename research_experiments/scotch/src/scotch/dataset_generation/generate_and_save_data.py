@@ -1,4 +1,5 @@
 """This script is to generate synthetic dataset for SCOTCH experiments."""
+
 import os
 import sys
 from argparse import Namespace

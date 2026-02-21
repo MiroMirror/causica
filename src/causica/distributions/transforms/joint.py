@@ -57,9 +57,11 @@ class JointTransform(TypedTransform[TensorDictBase, TensorDictBase]):
 
         return x.clone().update(
             {
-                key: self.transformations[key].log_abs_det_jacobian(x[key], y[key])
-                if key in self.transformations
-                else torch.zeros_like(x[key])
+                key: (
+                    self.transformations[key].log_abs_det_jacobian(x[key], y[key])
+                    if key in self.transformations
+                    else torch.zeros_like(x[key])
+                )
                 for key in x.keys()
             }
         )

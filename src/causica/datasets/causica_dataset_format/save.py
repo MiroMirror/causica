@@ -232,11 +232,9 @@ def intervention_or_counterfactual_to_causica_dict(
 
 def save_data(
     savedir: str,
-    data: VariablesMetadata
-    | torch.Tensor
-    | TensorDict
-    | list[InterventionWithEffects]
-    | list[CounterfactualWithEffects],
+    data: (
+        VariablesMetadata | torch.Tensor | TensorDict | list[InterventionWithEffects] | list[CounterfactualWithEffects]
+    ),
     data_enum: DataEnum | None = None,
     variables: VariablesMetadata | None = None,
     **storage_kwargs,

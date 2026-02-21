@@ -1,4 +1,5 @@
 """This implements the abstract classes for the drift and diffusion coefficients used in SCOTCH"""
+
 from abc import ABC, abstractmethod
 
 from torch import Tensor, nn

@@ -1,4 +1,5 @@
 """This file implements the functional relationship required for SCOTCH"""
+
 from typing import Optional, Type
 
 import torch

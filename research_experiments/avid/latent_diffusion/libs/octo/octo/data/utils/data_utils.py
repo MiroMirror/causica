@@ -105,9 +105,9 @@ def get_dataset_statistics(
     dataset = dataset.traj_map(
         lambda traj: {
             "action": traj["action"],
-            "proprio": traj["observation"]["proprio"]
-            if "proprio" in traj["observation"]
-            else tf.zeros_like(traj["action"]),
+            "proprio": (
+                traj["observation"]["proprio"] if "proprio" in traj["observation"] else tf.zeros_like(traj["action"])
+            ),
         }
     )
 

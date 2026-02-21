@@ -1,6 +1,7 @@
 """
 A module to load data from the standard directory structure (i.e. the one followed by csuite)
 """
+
 import json
 import logging
 import os
@@ -108,7 +109,7 @@ def load_data(
 
     with fsspec_open(path_name) as f:
         match data_enum:
-            case (DataEnum.TRAIN | DataEnum.TEST | DataEnum.VALIDATION):
+            case DataEnum.TRAIN | DataEnum.TEST | DataEnum.VALIDATION:
                 arr = np.loadtxt(f, delimiter=",")
                 categorical_sizes = get_categorical_sizes(variables_list=variables_metadata.variables)
                 return convert_one_hot(

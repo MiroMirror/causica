@@ -16,6 +16,7 @@ Target configuration:
     state_encoding: Type of state encoding used -- see above
     action_encoding: Type of action encoding used, e.g. EEF position vs joint position control
 """
+
 from enum import IntEnum
 
 

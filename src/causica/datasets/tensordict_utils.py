@@ -84,9 +84,9 @@ def expand_tensordict_groups(tensordict: TensorDictBase, variable_groups: dict[s
 
     return TensorDict(
         {
-            variable_name: tensordict.get(group_name)
-            if len(variable_names) == 1
-            else tensordict.get(group_name)[..., i, None]
+            variable_name: (
+                tensordict.get(group_name) if len(variable_names) == 1 else tensordict.get(group_name)[..., i, None]
+            )
             for group_name, variable_names in variable_groups.items()
             for i, variable_name in enumerate(variable_names)
         },

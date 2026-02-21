@@ -3,6 +3,7 @@ Contains trajectory transforms used in the octo data pipeline. Trajectory transf
 that represents a single trajectory, meaning each tensor has the same leading dimension (the trajectory
 length).
 """
+
 import logging
 
 import tensorflow as tf

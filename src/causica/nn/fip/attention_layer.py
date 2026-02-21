@@ -63,7 +63,6 @@ def scaled_dot_product_attention(
     mask: Optional[torch.Tensor] = None,
     cost_type: str = "dot_product",
 ) -> torch.Tensor:
-
     """
     Compute the standard attention matrix
 
