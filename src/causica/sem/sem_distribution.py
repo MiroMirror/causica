@@ -5,6 +5,7 @@ from torch.distributions.constraints import Constraint
 from causica.distributions.adjacency import AdjacencyDistribution
 from causica.distributions.distribution_module import DistributionModule
 from causica.distributions.noise.joint import JointNoiseModule
+
 # 从子模块直接导入，避免与 causica.distributions 的循环导入（distributions/__init__ 会导入本模块）
 from causica.functional_relationships.functional_relationships import FunctionalRelationships
 from causica.functional_relationships.temporal_functional_relationships import TemporalEmbedFunctionalRelationships
@@ -142,3 +143,4 @@ class TemporalSEMDistributionModule(DistributionModule[TemporalSEMDistribution])
             noise_module=self.noise_module,
             functional_relationships=self.functional_relationships,
         )
+
