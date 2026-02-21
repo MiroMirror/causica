@@ -15,27 +15,28 @@ jobs:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
 
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       with:
         path: ~/.cache/pypoetry/virtualenvs
-        key: ${{ hashFiles('poetry.lock') }}
+        # 每个 Python 版本单独缓存，避免多版本矩阵共用错误环境
+        key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}-${{ matrix.python-version }}
       id: cache
 
     - name: Install poetry
       run: |
-        curl -sSL https://install.python-poetry.org | python3 -
+        pip install poetry==1.8.3
 
     - name: Install dependencies
       run: |
         poetry env use ${{ matrix.python-version }}
         poetry install --extras seaborn
-      if: steps.cache.outputs.cache-hit != 'true'
+      # 始终执行 install，保证当前 job 的 venv 正确；cache 只加速下载
 
     - name: Verify pre-commit checks
       uses: pre-commit/action@v3.0.0
