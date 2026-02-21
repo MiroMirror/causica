@@ -143,4 +143,3 @@ class TemporalSEMDistributionModule(DistributionModule[TemporalSEMDistribution])
             noise_module=self.noise_module,
             functional_relationships=self.functional_relationships,
         )
-

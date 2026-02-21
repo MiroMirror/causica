@@ -31,10 +31,12 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
+        # 排除 research_experiments（内含第三方/实验代码，非主包）及常见非源码目录
+        EXCLUDE="research_experiments,.git,__pycache__,.venv,venv,build,dist,*.egg-info"
         # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude=$EXCLUDE
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude=$EXCLUDE
     - name: Test with pytest
       run: |
         pytest
