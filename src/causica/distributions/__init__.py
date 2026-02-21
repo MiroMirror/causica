@@ -43,3 +43,4 @@ from causica.distributions.noise import (
     create_spline_dist_params,
 )
 from causica.distributions.signed_uniform import MultivariateSignedUniform
+from causica.sem.sem_distribution import SEMDistribution, SEMDistributionModule
