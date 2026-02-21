@@ -35,25 +35,25 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v5
       with:
         python-version: ${{ env.PYTHON_VERSION }}
 
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       with:
         path: ~/.cache/pypoetry/virtualenvs
-        key: ${{ hashFiles('poetry.lock') }}
+        key: ${{ runner.os }}-poetry-docs-${{ hashFiles('poetry.lock') }}-${{ env.PYTHON_VERSION }}
       id: cache
 
     - name: Install poetry
       run: |
-            python -m pip install poetry==$POETRY_VERSION
+        python -m pip install poetry==$POETRY_VERSION
 
     - name: Install dependencies
       run: |
         poetry env use $PYTHON_VERSION
         poetry install --with dev
-      if: steps.cache.outputs.cache-hit != 'true'
+      # 始终执行以保证 venv 正确；cache 仅加速
 
     - name: Setup Pages
       id: pages
