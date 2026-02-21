@@ -10,6 +10,7 @@ jobs:
   build-linux:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false  # 一个版本失败不取消其他版本，便于看到 3.10/3.12/3.13 的完整结果
       max-parallel: 5
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
