@@ -13,7 +13,7 @@ from causica.sem.sem_distribution import SEMDistribution
 
 
 def create_sem_params(
-    shapes: dict[str, torch.Size]
+    shapes: dict[str, torch.Size],
 ) -> tuple[AdjacencyDistribution, JointNoiseModule, FunctionalRelationships]:
     num_nodes = len(shapes)
     independent_noise_modules: dict[str, NoiseModule[Noise[torch.Tensor]]] = {

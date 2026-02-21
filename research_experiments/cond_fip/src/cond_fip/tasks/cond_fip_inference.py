@@ -102,7 +102,7 @@ class CondFiPInference(pl.LightningModule):
             batch: Batch from the lightning dataset loader
             with_true_noise: Whether we utilize the true noise variables or the inferred noise variables
         """
-        (val_X, val_y, *_) = batch
+        val_X, val_y, *_ = batch
 
         # get current meand and std
         curr_data = torch.cat([self.train_X, val_X], dim=1)
@@ -170,7 +170,7 @@ class CondFiPInference(pl.LightningModule):
             batch: Batch from the lightning dataset loader
             with_true_noise: Whether we utilize the true noise variables or the inferred noise variables
         """
-        (val_X, val_y, *_) = batch
+        val_X, val_y, *_ = batch
         batch_size = val_X.shape[0]
 
         # get current meand and std

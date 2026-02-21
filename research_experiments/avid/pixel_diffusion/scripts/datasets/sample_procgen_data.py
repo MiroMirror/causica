@@ -1,4 +1,4 @@
-"""This script samples random Procgen data according to the process defined in the Genie paper appendix. 
+"""This script samples random Procgen data according to the process defined in the Genie paper appendix.
 
 The data is stored as .npz files in the specified output folder.
 """

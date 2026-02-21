@@ -150,7 +150,7 @@ class CondFiPTraining(pl.LightningModule):
         self.encoder.encoder.sample_mask = None
 
     def training_step(self, batch):
-        (train_X, train_y, true_graph, *_) = batch
+        train_X, train_y, true_graph, *_ = batch
 
         self.update_mask(true_graph)
 
@@ -204,7 +204,7 @@ class CondFiPTraining(pl.LightningModule):
         return train_loss
 
     def validation_step(self, batch):
-        (val_X, val_y, true_graph, *_) = batch
+        val_X, val_y, true_graph, *_ = batch
 
         self.update_mask(true_graph)
 
@@ -279,7 +279,7 @@ class CondFiPTraining(pl.LightningModule):
         )
 
     def test_step(self, batch, _):
-        (val_X, val_y, true_graph, *_) = batch
+        val_X, val_y, true_graph, *_ = batch
 
         self.update_mask(true_graph)
 
@@ -397,7 +397,7 @@ class CondFiPTraining(pl.LightningModule):
             targets corresponding to the inputs for cond-FiP; expected shape (batch_size, num_emb_samples, max_seq_length)
 
         """
-        (data_X, data_y, *_) = batch
+        data_X, data_y, *_ = batch
         total_datasets = data_X.shape[0]
         num_emb_samples = int(data_X.shape[1] / 2)
         total_nodes = data_X.shape[-1]
@@ -504,7 +504,7 @@ class CondFiPTraining(pl.LightningModule):
             )
 
     def test_prediction_counterfactual(self, batch, dataset_embedded=None):
-        (val_X, *_) = batch
+        val_X, *_ = batch
 
         num_interventions = val_X.shape[-1]
         loss_cf_w = 0.0
@@ -540,7 +540,7 @@ class CondFiPTraining(pl.LightningModule):
             MSE reconstruction loss in countefactual generation
 
         """
-        (val_X, val_y, *_) = batch
+        val_X, val_y, *_ = batch
         num_emb_samples = int(val_X.shape[1] / 2)
 
         # compute true counterfactuals
@@ -596,7 +596,7 @@ class CondFiPTraining(pl.LightningModule):
         return loss_mse_cf
 
     def compute_true_func(self, batch, points):
-        (_, _, true_graph, *metadata) = batch
+        _, _, true_graph, *metadata = batch
 
         mean_data = metadata[0]
         std_data = metadata[1]
@@ -618,7 +618,7 @@ class CondFiPTraining(pl.LightningModule):
         return torch.cat(targets, dim=0)
 
     def compute_true_fixed_point(self, batch):
-        (val_X, val_y, *_) = batch
+        val_X, val_y, *_ = batch
 
         with torch.no_grad():
             f_val = val_y
@@ -631,7 +631,7 @@ class CondFiPTraining(pl.LightningModule):
         return f_val, list_true_preds
 
     def generate_counterfactual(self, batch, int_idx, int_val):
-        (_, val_y, *_) = batch
+        _, val_y, *_ = batch
 
         with torch.no_grad():
             f_val = val_y.clone()
@@ -655,7 +655,7 @@ class CondFiPTraining(pl.LightningModule):
         return torch.stack(list_cf, dim=0)
 
     def generate_one_intervention(self, batch, type_treatment="quantile"):
-        (val_X, *_) = batch
+        val_X, *_ = batch
         size = len(val_X)
 
         # generate random index and values for intervention

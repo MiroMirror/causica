@@ -351,7 +351,7 @@ class SyntheticDataModule(pl.LightningDataModule):
         self.test_dataset = self._get_original_dataset(self.test_batch_size)
 
     def on_before_batch_transfer(self, batch, dataloader_idx):
-        (val_X, val_y, graph, *metadata) = batch
+        val_X, val_y, graph, *metadata = batch
         graph = graph.transpose(-2, -1)  # because the parents are in the columns!
 
         if self.standardize:

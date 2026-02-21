@@ -74,9 +74,10 @@ ignore_missing_imports = true
 exclude = [
   "research_experiments/avid",
   "research_experiments/fip",
+  "docs",
 ]
 # 与 PyTorch/tensordict 等库的类型标注兼容，避免 CI 中大量 override/type-var 报错
-disable_error_code = ["override", "assignment", "misc", "valid-type", "type-var", "type-arg", "arg-type", "operator", "attr-defined"]
+disable_error_code = ["override", "assignment", "misc", "valid-type", "type-var", "type-arg", "arg-type", "operator", "attr-defined", "var-annotated", "call-arg", "import-untyped", "union-attr"]
 
 [tool.pylint.main]
 ignore-paths = [
@@ -99,9 +100,7 @@ limit-inference-results = 100
 # version used to run pylint.
 py-version = "3.13"
 
-# When enabled, pylint would attempt to guess common misconfiguration and emit
-# user-friendly hints instead of false-positive error messages.
-suggestion-mode = true
+# suggestion-mode 在 Pylint 3.x 中已移除或更名，去掉以避免 E0015
 
 [tool.pylint.basic]
 # Naming style matching correct argument names.

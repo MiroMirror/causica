@@ -125,7 +125,7 @@ class EncoderTraining(pl.LightningModule):
             self.ema.ema_model.encoder.sample_mask = None
 
     def training_step(self, batch):
-        (train_X, train_y, true_graph, *_) = batch
+        train_X, train_y, true_graph, *_ = batch
         batch_size = train_X.shape[0]
 
         self.update_mask(true_graph)
@@ -165,7 +165,7 @@ class EncoderTraining(pl.LightningModule):
         return train_loss
 
     def validation_step(self, batch, _):
-        (val_X, val_y, true_graph, *_) = batch
+        val_X, val_y, true_graph, *_ = batch
         batch_size = val_X.shape[0]
 
         with torch.enable_grad():
