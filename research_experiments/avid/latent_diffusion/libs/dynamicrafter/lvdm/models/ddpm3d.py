@@ -182,7 +182,9 @@ class DDPM(pl.LightningModule):
         )
 
         if self.parameterization == "eps":
-            lvlb_weights = self.betas**2 / (2 * self.posterior_variance * to_torch(alphas) * (1 - self.alphas_cumprod))
+            lvlb_weights = self.betas**2 / (
+                2 * self.posterior_variance * to_torch(alphas) * (1 - self.alphas_cumprod)
+            )
         elif self.parameterization == "x0":
             lvlb_weights = 0.5 * np.sqrt(torch.Tensor(alphas_cumprod)) / (2.0 * 1 - torch.Tensor(alphas_cumprod))
         elif self.parameterization == "v":
