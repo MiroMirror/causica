@@ -54,7 +54,9 @@ def ensure_adjacency_matrix(
     if isinstance(adjacency_matrix, str):
         adjacency_matrix = load_adjacency_matrix(adjacency_matrix)
     elif isinstance(adjacency_matrix, np.ndarray):
-        adjacency_matrix = torch.tensor(adjacency_matrix, dtype=torch.long if np.issubdtype(adjacency_matrix.dtype, np.integer) else None)
+        adjacency_matrix = torch.tensor(
+            adjacency_matrix, dtype=torch.long if np.issubdtype(adjacency_matrix.dtype, np.integer) else None
+        )
     if isinstance(adjacency_matrix, torch.Tensor) and adjacency_matrix.dtype in (torch.int32, torch.int16):
         adjacency_matrix = adjacency_matrix.to(torch.int64)
     return adjacency_matrix
