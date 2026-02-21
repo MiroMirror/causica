@@ -102,11 +102,13 @@ class GibbsDAGPrior(td.Distribution):
         """
         assert isinstance(self._expert_graph_container, ExpertGraphContainer)
         assert A.shape[-len(self.event_shape) :] == self.event_shape
+        # Ensure expert graph tensors are on same device as A (handles CPU/CUDA mismatch)
+        device = A.device
+        mask = self._expert_graph_container.mask.to(device)
+        dag = self._expert_graph_container.dag.to(device)
+        confidence = self._expert_graph_container.confidence.to(device)
         return (
-            (
-                self._expert_graph_container.mask
-                * (A - self._expert_graph_container.confidence * self._expert_graph_container.dag)
-            )
+            (mask * (A - confidence * dag))
             .abs()
             .sum()
         )
@@ -128,6 +130,8 @@ class GibbsDAGPrior(td.Distribution):
         log_prob = -self._sparsity_lambda * self.get_sparsity_term(value)
 
         if self._expert_graph_container is not None:
-            log_prob -= self._expert_graph_container.scale * self.get_expert_graph_term(value)
+            expert_term = self.get_expert_graph_term(value)
+            scale = self._expert_graph_container.scale.to(value.device)
+            log_prob -= scale * expert_term
 
         return log_prob
