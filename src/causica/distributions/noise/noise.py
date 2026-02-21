@@ -44,7 +44,7 @@ BaseNoiseType_co = TypeVar("BaseNoiseType_co", bound=Noise, covariant=True)
 
 class IndependentNoise(td.Independent):
     """Like `td.Idenpendent` but also forwards `Noise` specific methods.
-    
+
     This class supports generic type syntax (e.g., IndependentNoise[BernoulliNoise])
     for type checking, but does not inherit from Generic to avoid MRO conflicts
     in Python 3.12.

@@ -107,11 +107,7 @@ class GibbsDAGPrior(td.Distribution):
         mask = self._expert_graph_container.mask.to(device)
         dag = self._expert_graph_container.dag.to(device)
         confidence = self._expert_graph_container.confidence.to(device)
-        return (
-            (mask * (A - confidence * dag))
-            .abs()
-            .sum()
-        )
+        return (mask * (A - confidence * dag)).abs().sum()
 
     def log_prob(self, value: torch.Tensor) -> torch.Tensor:
         """

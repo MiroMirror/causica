@@ -27,19 +27,11 @@ class ICGNN(FunctionalRelationships):
         super().__init__(shapes=shapes)
 
         # 使用新版本的 API：stacked_key_masks 而不是 stacked_variable_masks
-        self.nn = FGNNI(
-            self.stacked_key_masks, 
-            embedding_size, 
-            out_dim_g, 
-            norm_layer, 
-            res_connection
-        )
+        self.nn = FGNNI(self.stacked_key_masks, embedding_size, out_dim_g, norm_layer, res_connection)
 
     def forward(self, samples: TensorDict, graphs: torch.Tensor) -> TensorDict:
         # 使用新版本的 API：tensor_to_td.inv() 和 tensor_to_td()
-        return self.tensor_to_td(
-            self.nn(self.tensor_to_td.inv(samples), graphs)
-        )
+        return self.tensor_to_td(self.nn(self.tensor_to_td.inv(samples), graphs))
 
 
 class FGNNI(nn.Module):
