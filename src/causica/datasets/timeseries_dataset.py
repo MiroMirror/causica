@@ -28,11 +28,14 @@ def load_adjacency_matrix(path: str) -> torch.Tensor:
     if path.endswith(".csv"):
         with fsspec.open_files(path, "r") as files:
             (file,) = files
-            return torch.tensor(np.loadtxt(file, dtype=int, delimiter=","))
+            # 使用 np.int64 保证与 torch.int64 一致，避免 dtype=int 在部分平台为 int32
+            return torch.tensor(np.loadtxt(file, dtype=np.int64, delimiter=","))
     elif path.endswith(".npy"):
         with fsspec.open_files(path, "rb") as files:
             (file,) = files
-            return torch.tensor(np.load(file))
+            arr = np.load(file)
+            t = torch.tensor(arr)
+            return t.long() if t.dtype in (torch.int32, torch.int16) else t
     else:
         raise ValueError("Unsupported file format.")
 
@@ -51,7 +54,9 @@ def ensure_adjacency_matrix(
     if isinstance(adjacency_matrix, str):
         adjacency_matrix = load_adjacency_matrix(adjacency_matrix)
     elif isinstance(adjacency_matrix, np.ndarray):
-        adjacency_matrix = torch.tensor(adjacency_matrix)
+        adjacency_matrix = torch.tensor(adjacency_matrix, dtype=torch.long if np.issubdtype(adjacency_matrix.dtype, np.integer) else None)
+    if isinstance(adjacency_matrix, torch.Tensor) and adjacency_matrix.dtype in (torch.int32, torch.int16):
+        adjacency_matrix = adjacency_matrix.to(torch.int64)
     return adjacency_matrix
 
 

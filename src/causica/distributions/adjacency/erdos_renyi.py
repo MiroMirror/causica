@@ -67,7 +67,7 @@ class ErdosRenyiDAGDistribution(AdjacencyDistribution):
 
         # generate a random permutation matrix
         aranges = np.tile(np.arange(self.num_nodes), sample_shape + self.probs.shape + (1,))  # shape [..., n]
-        np_perms = torch.tensor(self.np_rng.permuted(aranges, axis=-1))  # a batch of rearranged [0, 1, 2... n]
+        np_perms = torch.tensor(self.np_rng.permuted(aranges, axis=-1), dtype=torch.long)  # one_hot 需要 LongTensor
         # one hot the last dimension to create a tensor of shape [..., n, n]
         perms = torch.nn.functional.one_hot(np_perms, num_classes=self.num_nodes).to(
             dtype=low_tri.dtype, non_blocking=True

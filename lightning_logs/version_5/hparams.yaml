@@ -1,0 +1,23 @@
+root_path: !!python/object/apply:pathlib.WindowsPath
+- C:\
+- Users
+- asshole
+- AppData
+- Local
+- Temp
+- pytest-of-asshole
+- pytest-2
+- test_save_load_variable_spec_d1
+batch_size: 2
+dataset_name: anonymous_dataset
+standardize:
+- x0
+log_normalize: false
+exclude_standardization: []
+exclude_log_normalization: []
+default_offset: 1.0
+log_normalize_min_margin: 0.0
+fit_normalizer_on_test_sets: false
+load_counterfactual: false
+load_interventional: false
+load_validation: false

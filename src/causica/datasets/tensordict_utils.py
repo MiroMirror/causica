@@ -24,7 +24,8 @@ def convert_one_hot(
     for key, num_classes in one_hot_sizes.items():
         cat_var = new_data[key]
         assert cat_var.shape == new_data.batch_size + (1,), "Only support 1D categorical values"
-        new_data[key] = torch.nn.functional.one_hot(cat_var[..., 0].to(torch.long), num_classes=num_classes)
+        # one_hot 仅接受 LongTensor，显式 .long() 以兼容 numpy/int32/float 等来源
+        new_data[key] = torch.nn.functional.one_hot(cat_var[..., 0].long(), num_classes=num_classes)
     return new_data
 
 

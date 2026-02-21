@@ -3,8 +3,6 @@ import abc
 import torch
 from tensordict import TensorDict
 
-from causica.distributions.transforms import TensorToTensorDictTransform
-
 
 class FunctionalRelationships(abc.ABC, torch.nn.Module):
     def __init__(self, shapes: dict[str, torch.Size], batch_shape: torch.Size = torch.Size([])) -> None:
@@ -17,6 +15,8 @@ class FunctionalRelationships(abc.ABC, torch.nn.Module):
         super().__init__()
         self.batch_shape = batch_shape
         self.shapes = shapes
+        # 延迟导入，避免 functional_relationships -> distributions -> sem_distribution -> functional_relationships 循环
+        from causica.distributions.transforms import TensorToTensorDictTransform
         # create a transform for mapping tensors to tensordicts
         self.tensor_to_td = TensorToTensorDictTransform(shapes)
         # this needs to be registered to the module, and register buffer doesn't work

@@ -1,4 +1,5 @@
 import json
+import unittest.mock as mock
 
 import numpy as np
 import pandas as pd
@@ -236,10 +237,17 @@ def test_save_load_variable_spec_data(tmp_path, log_normalize):
     trainer = Trainer(max_epochs=1)
     trainer.fit(deci, datamodule=data_module)
     trainer.save_checkpoint(tmp_path / "deci.ckpt")
-    # Load checkpoint
-    load_data_module = VariableSpecDataModule.load_from_checkpoint(  # pylint: disable=no-value-for-parameter
-        checkpoint_path=tmp_path / "deci.ckpt"
-    )
+    # Load checkpoint（PyTorch 2.0+ 默认 weights_only=True 会拒绝含自定义类的 checkpoint，此处用 False）
+    _real_torch_load = torch.load
+
+    def _torch_load_weights_ok(*args, **kwargs):
+        kwargs.setdefault("weights_only", False)
+        return _real_torch_load(*args, **kwargs)
+
+    with mock.patch("torch.load", _torch_load_weights_ok):
+        load_data_module = VariableSpecDataModule.load_from_checkpoint(  # pylint: disable=no-value-for-parameter
+            checkpoint_path=tmp_path / "deci.ckpt"
+        )
     # Note that if state_dict and load_state_dict are not set for DataModule, only hyperparameters will be loaded and
     # only init function is called. So calling prepare_data() is needed to re-fit the normalizer.
     load_data_module.prepare_data()

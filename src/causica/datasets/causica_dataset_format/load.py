@@ -96,7 +96,7 @@ def load_data(
 
     if data_enum == DataEnum.TRUE_ADJACENCY:
         with fsspec_open(path_name) as f:
-            return torch.tensor(np.loadtxt(f, dtype=int, delimiter=","))
+            return torch.tensor(np.loadtxt(f, dtype=np.int64, delimiter=","))
 
     if data_enum == DataEnum.VARIABLES_JSON:
         if variables_metadata is not None:
