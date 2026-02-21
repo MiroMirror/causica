@@ -400,9 +400,11 @@ class AugLagLR:
             return False, AugLagConvergenceReasonTuple(
                 AugLagInnerConvergenceReason.NOT_CONVERGED, AugLagOuterConvergenceReason.NOT_CONVERGED
             )
-        assert torch.all(lagrangian_penalty >= 0), "auglag penalty must be non-negative"
+        # Support both Tensor and Python scalar (torch.all expects Tensor)
+        penalty = lagrangian_penalty if isinstance(lagrangian_penalty, torch.Tensor) else torch.tensor(lagrangian_penalty)
+        assert torch.all(penalty >= 0), "auglag penalty must be non-negative"
         self._update_loss_tracker(loss_value.detach())
-        self._cur_lagrangian_penalty = lagrangian_penalty.detach()
+        self._cur_lagrangian_penalty = penalty.detach()
         self.step_counter += 1
         self._check_best_loss()
         return self._is_auglag_converged(optimizer=optimizer, loss=loss)
